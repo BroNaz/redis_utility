@@ -28,7 +28,7 @@ func NewCalculator(buffSize int, pipe redis.Pipeliner, stat *Statistics, analysi
 }
 
 func (c *Calculator) AddKeyToBuff(key string) {
-	//если буфер больше c.buffSize, то начинаем собирать информацию!
+	//if the buffer is greater than c.buffSize, then we start collecting information!
 	if c.buffKey.Add(key) >= c.buffSize {
 		c.collectionOfInformation()
 	}
@@ -139,7 +139,6 @@ func (c *Calculator) weightCalculationUsingDump(mKeyType map[string]string) {
 			}
 			size := estimateTheDumpVolume(resStr)
 			c.stat.Add(key, mKeyType[key], size)
-
 		}
 	}
 }
@@ -278,6 +277,7 @@ func (c *Calculator) GiveTheAnalyticsFunction(method string) func(map[string]str
 	case "custom":
 		return c.weightCalculationUsingDynamicSelection
 	default:
-		return c.weightCalculationUsingDynamicSelection
+		log.Info().Msg("calculation method is not specified (\"dump\" is set by default)")
+		return c.weightCalculationUsingDump
 	}
 }

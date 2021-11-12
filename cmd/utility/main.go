@@ -13,14 +13,14 @@ import (
 
 var (
 	configLevel  string
-	configAddrs  = logger.Addrs{}
+	configAdders = logger.Address{}
 	AnalysisType string
 )
 
 func init() {
 	flag.StringVar(&configLevel, "log", "info", "log level")
-	flag.Var(&configAddrs, "addr", "addres redis db")
-	flag.StringVar(&AnalysisType, "type", "custom", "selecting the method for calculating analytics")
+	flag.Var(&configAdders, "addr", "address redis db")
+	flag.StringVar(&AnalysisType, "type", "dump", "selecting the method for calculating analytics")
 
 	flag.Parse()
 	conf := logger.LogConfig{
@@ -36,7 +36,7 @@ func main() {
 		Msg("Redis analyzer has started")
 
 	newRedis := redisClient.NewRedis(&redisClient.RedisConfig{
-		Addrs:        configAddrs.Get(),
+		Addrs:        configAdders.Get(),
 		DB:           0,
 		DialTimeout:  time.Duration(3) * time.Second,
 		ReadTimeout:  time.Duration(3) * time.Second,

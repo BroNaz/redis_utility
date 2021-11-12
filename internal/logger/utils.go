@@ -21,18 +21,18 @@ func logLevel(level string) zerolog.Level {
 	}
 }
 
-type Addrs struct {
+type Address struct {
 	value []string
 }
 
-func (a *Addrs) String() string {
+func (a *Address) String() string {
 	return ""
 }
 
-func (a *Addrs) Set(s string) error {
+func (a *Address) Set(s string) error {
 	a.value = append(a.value, s)
 	return nil
 }
-func (a *Addrs) Get() []string {
+func (a *Address) Get() []string {
 	return a.value
 }
